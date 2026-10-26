@@ -252,7 +252,7 @@ footer strong{color:var(--fg);display:block;font-size:15px}
 
 <script>
 (function(){
-  var U=("https://yky1234x.github.io/jeongdong/?v="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
+  var U=("https://yky1234x.github.io/jeongdong/?d="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
   var T={
     ko:"서울 정동 경향신문사 외벽 고공 밧줄농성. 정동 할머니의 소원 “우리 내려와서 같이 밥 먹자” #시민언론사",
     en:"A rope sit-in on the wall of the Kyunghyang Shinmun building in Seoul. “Come down, let’s eat together” #CitizenPress",
@@ -318,7 +318,7 @@ footer strong{color:var(--fg);display:block;font-size:15px}
   });
   (function(){
     function dn(y,m,d){var n=new Date(Date.now()+9*3600e3);return Math.floor((Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate())-Date.UTC(y,m-1,d))/864e5)+1;}
-    var s=dn(2026,9,6), t=dn(2026,8,24), U=("https://yky1234x.github.io/jeongdong/?v="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
+    var s=dn(2026,9,6), t=dn(2026,8,24), U=("https://yky1234x.github.io/jeongdong/?d="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
     var TX={
       ko:"서울 정동 경향신문사(민주노총 본부 건물) 외벽에 사람이 있습니다.\n고공농성 "+s+"일째 · 천막농성 "+t+"일째\n민주노총은 노동자를 살려라! 사람이 먼저입니다.\n여러분이 시민 언론사입니다. 널리 알려주세요.\n▶ "+U+"\n#시민언론사 #고공농성 #정동",
       en:"A person is living on the outer wall of the Kyunghyang Shinmun building in Seoul, home to the KCTU headquarters.\nDay "+s+" on the wall · Day "+t+" in the tent\nKCTU, save the workers! People come first.\nYou are the citizen press. Please share.\n▶ "+U+"#en\n#CitizenPress #Seoul #LaborRights",
@@ -407,7 +407,7 @@ footer strong{color:var(--fg);display:block;font-size:15px}
   var saved=null; try{saved=localStorage.getItem("lang")}catch(e){}
   var nav=(navigator.language||"ko").slice(0,2).toLowerCase();
   show(LOC[h]?h:(saved&&LOC[saved]?saved:(LOC[nav]?nav:"ko")));
-  var base=("https://yky1234x.github.io/jeongdong/?v="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
+  var base=("https://yky1234x.github.io/jeongdong/?d="+new Date(Date.now()+9*3600e3).toISOString().slice(0,10).replace(/-/g,""));
   document.querySelectorAll("[data-url]").forEach(function(c){c.textContent=base});
   document.querySelectorAll("[data-copy]").forEach(function(btn){
     var label=btn.textContent;
