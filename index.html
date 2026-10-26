@@ -41,15 +41,17 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16
 .langs button[aria-pressed="true"]{background:var(--red-ink);color:var(--red)}
 .langs button:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 main .wrap{padding-block:22px 40px;display:flex;flex-direction:column;gap:22px}
-.days{display:flex;gap:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-size:14px;color:var(--muted)}
+.days{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{display:flex;flex-direction:column;gap:2px;line-height:1.3;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-size:14px;color:var(--muted)}
 .since{font-size:15px;font-weight:700;color:var(--red);margin-top:-12px}
-.since span{display:inline-block}
+.since span{display:block}
 .fast{font-size:16px;font-weight:900;color:var(--red-ink);background:var(--fg);border-radius:10px;padding:8px 12px;margin-top:-10px}
-.fast span{display:inline-block}
+.fast span{display:block;line-height:1.5}
 .fast b{color:var(--gold);font-size:20px;font-variant-numeric:tabular-nums}
 .fast small{display:block;font-size:14px;font-weight:700;opacity:.9;margin-top:4px;line-height:1.5}
-.chip b{font-size:22px;color:var(--red);font-variant-numeric:tabular-nums;font-weight:900}
+.chip small{font-size:13px;font-weight:700;word-break:keep-all}
+.chip span{font-size:14px;color:var(--fg)}
+.chip b{font-size:24px;color:var(--red);font-variant-numeric:tabular-nums;font-weight:900}
 h1{font-size:clamp(30px,8vw,40px);line-height:1.2;font-weight:900;margin:0;text-wrap:balance}
 video{width:100%;max-width:100%;aspect-ratio:9/16;background:#000;border-radius:14px;display:block}
 .quote{font-family:var(--f-quote);font-size:clamp(24px,6.4vw,30px);line-height:1.4;font-weight:700;color:var(--red);margin:0;text-wrap:balance}
@@ -72,7 +74,7 @@ p{margin:0}
 .kit .how{font-size:14px;color:var(--muted)}
 .kit img{width:100%;max-width:100%;border-radius:10px;display:block}
 .kit .imgs{display:grid;grid-template-columns:1fr;gap:10px}
-.kit pre{white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word;font-family:inherit;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;margin:0;line-height:1.6}
+.kit pre{white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font-family:inherit;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;margin:0;line-height:1.6}
 .kit .btns{display:flex;flex-wrap:wrap;gap:8px}
 .kit .msg{font-size:13px;color:var(--red);font-weight:700}
 .kit .ig{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;line-height:1.6}
@@ -108,7 +110,7 @@ p{margin:0}
 .maps a{font-size:14px;font-weight:700;color:var(--red);border:1.5px solid var(--red);border-radius:999px;padding:6px 14px;text-decoration:none}
 .press strong span{display:inline-block;font-size:inherit;font-weight:inherit}
 .press span{font-size:17px;font-weight:700;line-height:1.5}
-.press .pl{font-size:14px;font-weight:700;color:#1b1617;word-break:break-all;background:#fff;border-radius:8px;padding:6px 10px}
+.press .pl{font-size:13px;font-weight:700;color:#1b1617;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#fff;border-radius:8px;padding:6px 10px}
 .press .pc{font:inherit;font-weight:900;font-size:18px;background:#c8102e;color:#fff;border:0;border-radius:12px;padding:13px 18px;cursor:pointer;align-self:center}
 .press em{font-style:normal;font-weight:900;font-size:19px;color:#c8102e}
 .sns{display:flex;flex-direction:column;gap:10px}
@@ -122,7 +124,7 @@ p{margin:0}
 .gal figure.wide{grid-column:1 / -1}
 .gal img{width:100%;max-width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;display:block;background:var(--line)}
 .gal figure.wide img{aspect-ratio:4/3}
-.gal figcaption{font-size:14px;font-weight:700;line-height:1.4}
+.gal figcaption{text-wrap:balance;font-size:13.5px;font-weight:700;line-height:1.4}
 .gal-h{font-size:20px;font-weight:900;margin:0}
 .song{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
 .song h2{font-size:18px;margin:0}
@@ -133,7 +135,8 @@ audio{width:100%}
 .share code{font-size:12px;color:var(--muted);word-break:break-all;min-width:0}
 footer{border-top:1px solid var(--line);padding-top:16px;font-size:14px;color:var(--muted)}
 footer strong{color:var(--fg);display:block;font-size:15px}
-[lang="zh"]{font-family:"Noto Sans SC",var(--f-body)}
+[lang="zh"]{font-family:"Noto Sans SC",var(--f-body);word-break:normal;line-break:strict}
+[lang="zh"] *{word-break:normal}
 [lang="zh"] .quote{font-family:"Noto Sans SC",serif;font-weight:900}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
@@ -151,14 +154,14 @@ footer strong{color:var(--fg);display:block;font-size:15px}
 
 <main>
 <section id="s-ko" lang="ko"><div class="wrap">
-  <div class="days"><span class="chip">고공 외줄 밧줄농성 <b data-d="sky">48</b>일째</span><span class="chip">천막농성 <b data-d="tent">61</b>일째</span></div>
-  <p class="since"><span>고공 외줄 밧줄농성 2026. 9. 6. 시작</span> · <span>천막농성 2026. 8. 24. 시작</span></p>
-  <p class="fast"><span>고공 외줄 밧줄 단식농성 <b>17</b>일</span> · <span>천막 단식농성 <b>20</b>일 마무리</span><small>전태일 열사의 친동생 전태삼 선생님의 간곡한 권유로 양규서·함계남 노동자 부부 동지가 단식을 마쳤습니다. 고공 외줄 밧줄·천막 단식을 마친 뒤에도 고공 외줄 밧줄농성과 천막농성은 계속 진행 중입니다.</small></p>
+  <div class="days"><span class="chip"><small>고공 외줄 밧줄농성</small><span><b data-d="sky">48</b>일째</span></span><span class="chip"><small>천막농성</small><span><b data-d="tent">61</b>일째</span></span></div>
+  <p class="since"><span>고공 외줄 밧줄농성 2026. 9. 6. 시작</span><span>천막농성 2026. 8. 24. 시작</span></p>
+  <p class="fast"><span>고공 외줄 밧줄 단식농성 <b>17</b>일 마무리</span><span>천막 단식농성 <b>20</b>일 마무리</span><small>전태일 열사의 친동생 전태삼 선생님의 간곡한 권유로 양규서·함계남 노동자 부부 동지가 단식을 마쳤습니다. 고공 외줄 밧줄·천막 단식을 마친 뒤에도 고공 외줄 밧줄농성과 천막농성은 계속 진행 중입니다.</small></p>
   <p class="lead"><span>이 건물 외벽에</span> <span>사람이 있습니다</span></p>
   <p class="cry"><span>민주노총은</span> <span>노동자를 살려라!</span></p>
   <p class="first">사람이 먼저입니다</p>
   <figure class="gm"><img src="g_seat.jpg" alt="외벽에 매달린 채 고공 외줄 밧줄 단식농성 모습"><figcaption>고공 외줄 밧줄 단식농성 · 앉은 상태로 14일</figcaption></figure>
-  <div class="press"><span class="tag">PRESS</span><strong><span>여러분이</span> <span>시민 언론사입니다</span></strong><span><em>SNS에 올려 지금 상황을 널리 알려주세요!</em><br>찍고, 올리고, 알려주세요 #시민언론사</span><span class="pl">공유 링크: https://yky1234x.github.io/jeongdong/</span><button class="pc" type="button" data-pc="ko">공유 문구 한 번에 복사</button></div>
+  <div class="press"><span class="tag">PRESS</span><strong><span>여러분이</span> <span>시민 언론사입니다</span></strong><span><em>SNS에 올려 지금 상황을 널리 알려주세요!</em><br>찍고, 올리고, 알려주세요 <span style="white-space:nowrap">#시민언론사</span></span><span class="pl">yky1234x.github.io/jeongdong</span><button class="pc" type="button" data-pc="ko">공유 문구 한 번에 복사</button></div>
   <div class="about"><p><b>이 건물은 경향신문사 본사입니다.</b> 같은 건물에 <b>민주노총</b>(전국민주노동조합총연맹) 본부가 있습니다.</p><p>민주노총은 조합원 100만 명이 넘는 한국 양대 노총 중 하나로, 노동자를 대변한다는 단체입니다. <b>민주노총 본부가 있는 이 건물</b>(경향신문사 본사) 외벽에 <b>해고된 노동자(함계남)의 남편 양규서 동지</b>가 매달려 있습니다. 그는 현직 민주노총 공공운수노조 조직국장입니다. (연속 징계 3회: 4개월 · 6개월 · 6개월, 합계 16개월 무급)</p><p>이 건물에는 <b>뮤지컬 〈페인터즈〉 공연장</b>(경향아트힐)도 있습니다. 공연을 보러 오신 관광객 여러분, 바로 이 건물의 외벽입니다.</p><div class="maps"><a href="https://map.naver.com/p/search/%EA%B2%BD%ED%96%A5%EC%8B%A0%EB%AC%B8%EC%82%AC" target="_blank" rel="noopener">네이버 지도</a><a href="https://www.google.com/maps/search/?api=1&query=Kyunghyang+Shinmun+Jeongdong-gil+3+Seoul" target="_blank" rel="noopener">Google Maps</a></div><p class="note">※ 이 안내는 해당 공연 및 제작사와 관계가 없습니다.</p></div>
   <div class="hope"><h2>어른들의 희망</h2><p class="to">어린 친구들에게</p><p>여러분이 자라서 일하게 될 일터는 서로를 존중하는 곳이어야 합니다.</p><p>함계남 동지는 일하던 곳에서 직장 내 괴롭힘을 겪고, 결국 부당하게 해고되었다고 말합니다. 그 일을 바로잡으려고 부부가 천막과 건물 외벽에서 밤낮을 버티고 있습니다.</p><p>이 싸움은 누구도 일터에서 괴롭힘을 당하지 않는 세상, 여러분이 어른이 되었을 때 마음 놓고 일할 수 있는 세상을 만들기 위한 것입니다.</p><p class="end">그래서 이 싸움은 ‘어른들의 희망’입니다.</p></div>
   <div class="log" data-log="ko"><h2>투쟁 일지</h2><p class="sub">매일의 투쟁 기록을 이곳에 남깁니다. 최신 소식이 맨 위에 있습니다.</p><ol></ol></div>
@@ -185,22 +188,22 @@ footer strong{color:var(--fg);display:block;font-size:15px}
 </div></section>
 
 <section id="s-en" lang="en" hidden><div class="wrap">
-  <div class="days"><span class="chip">On the wall: day <b data-d="sky">48</b></span><span class="chip">In the tent: day <b data-d="tent">61</b></span></div>
-  <p class="since"><span>Single-rope sit-in began Sept 6, 2026</span> · <span>Tent sit-in began Aug 24, 2026</span></p>
-  <p class="fast"><span>Hunger strikes ended: <b>17</b> days on the wall</span> · <span><b>20</b> days in the tent</span><small>At the earnest urging of Mr. Jeon Tae-sam, younger brother of the martyr Jeon Tae-il, the worker couple Yang Gyu-seo and Ham Gye-nam ended their hunger strike. The sit-ins on the wall and in the tent are still going on.</small></p>
+  <div class="days"><span class="chip"><small>On the wall</small><span>Day <b data-d="sky">48</b></span></span><span class="chip"><small>In the tent</small><span>Day <b data-d="tent">61</b></span></span></div>
+  <p class="since"><span>Single-rope sit-in began Sept 6, 2026</span><span>Tent sit-in began Aug 24, 2026</span></p>
+  <p class="fast"><span>Hunger strikes ended</span><span>Wall <b>17</b> days · Tent <b>20</b> days</span><small>At the earnest urging of Mr. Jeon Tae-sam, younger brother of the martyr Jeon Tae-il, the worker couple Yang Gyu-seo and Ham Gye-nam ended their hunger strike. The sit-ins on the wall and in the tent are still going on.</small></p>
   <p class="lead"><span>A person is living</span> <span>on the wall of this building</span></p>
   <p class="cry"><span>KCTU,</span> <span>save the workers!</span></p>
   <p class="first">People come first</p>
   <figure class="gm"><img src="g_seat.jpg" alt="On hunger strike, hanging from the wall"><figcaption>Single-rope hunger strike · 14 days seated</figcaption></figure>
-  <div class="press"><span class="tag">PRESS</span><strong><span>You are</span> <span>the citizen press</span></strong><span><em>Post it on social media and let everyone know what is happening!</em><br>Snap it, post it, spread the word #CitizenPress</span><span class="pl">Share link: https://yky1234x.github.io/jeongdong/#en</span><button class="pc" type="button" data-pc="en">Copy share text</button></div>
+  <div class="press"><span class="tag">PRESS</span><strong><span>You are</span> <span>the citizen press</span></strong><span><em>Post it on social media and let everyone know what is happening!</em><br>Snap it, post it, spread the word <span style="white-space:nowrap">#CitizenPress</span></span><span class="pl">yky1234x.github.io/jeongdong</span><button class="pc" type="button" data-pc="en">Copy share text</button></div>
   <div class="about"><p><b>This building is the headquarters of the Kyunghyang Shinmun newspaper.</b> It also houses the head office of the <b>KCTU</b> (Korean Confederation of Trade Unions).</p><p>The KCTU is one of Korea’s two national labor federations, with more than one million members, and says it speaks for workers. Hanging on the outer wall of <b>the building that houses the KCTU headquarters</b> (the Kyunghyang Shinmun headquarters) is <b>Yang Gyu-seo, husband of the dismissed worker (Ham Gye-nam)</b>. He is himself a serving organizing director of the KCTU-affiliated Korean Public Service and Transport Workers’ Union. (Disciplined three times in a row: 4, 6 and 6 months — 16 months without pay in total)</p><p>This building is also home to the theater of the <b>musical PAINTERS</b> (Kyunghyang Art Hill). If you came to see the show, this is the outer wall of that very building.</p><div class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Kyunghyang+Shinmun+Jeongdong-gil+3+Seoul" target="_blank" rel="noopener">Google Maps</a><a href="https://map.naver.com/p/search/Kyunghyang%20Shinmun" target="_blank" rel="noopener">Naver Map</a></div><p class="note">This notice is not affiliated with the show or its producers.</p></div>
-  <div class="hope"><h2>The Hope of Grown-ups</h2><p class="to">To our young friends</p><p>The workplaces you will one day work in should be places where people respect one another.</p><p>Ham Gye-nam says she was harassed at work and, in the end, unfairly dismissed. To set this right, she and her husband are holding out day and night, in a tent and on the building’s outer wall.</p><p>This struggle is for a world where no one is bullied at work, so that when you grow up, you can work without fear.</p><p class="end">That is why this struggle is called “The Hope of Grown-ups.”</p></div>
+  <div class="hope"><h2>The Hope of Grown&#8209;ups</h2><p class="to">To our young friends</p><p>The workplaces you will one day work in should be places where people respect one another.</p><p>Ham Gye-nam says she was harassed at work and, in the end, unfairly dismissed. To set this right, she and her husband are holding out day and night, in a tent and on the building’s outer wall.</p><p>This struggle is for a world where no one is bullied at work, so that when you grow up, you can work without fear.</p><p class="end">That is why this struggle is called “The Hope of Grown-ups.”</p></div>
   <div class="log" data-log="en"><h2>Struggle Log</h2><p class="sub">A day-by-day record of the struggle. Newest first.</p><ol></ol></div>
   <h1>A Jeong-dong Grandmother’s Wish</h1>
   <video controls playsinline preload="metadata" poster="poster_en.jpg" src="ep1_en.mp4"></video>
   <p class="vnote">Day counts in the video are as of Oct 23, 2026. Today’s counts are shown at the top.</p>
   <p class="quote">“Come down, let’s eat together.”<small>She has just one wish.</small></p>
-  <figure class="gm"><img src="g_grandma.jpg" alt="A Jeong-dong grandmother holding a protester’s hand" loading="lazy"><figcaption>The hand a Jeong-dong grandmother holds so tightly</figcaption></figure>
+  <figure class="gm"><img src="g_grandma.jpg" alt="A Jeong-dong grandmother holding a protester’s hand" loading="lazy"><figcaption>The hand she holds so tightly</figcaption></figure>
   <div class="story">
     <p>On the outer wall of the Kyunghyang Shinmun building in Jeong-dong, Seoul, a worker is living on a sheet of fabric hung from ropes. Through rain and wind, he has not come down. On the sidewalk below, a tent sit-in continues alongside him.</p>
     <div class="demand"><span>What the protesters are asking for</span><strong>Reinstatement of KCTU staff dismissed from a workplace with fewer than five employees</strong></div>
@@ -208,25 +211,25 @@ footer strong{color:var(--fg);display:block;font-size:15px}
     <div class="give"><h2>Support the struggle</h2><p>Donations by Korean bank transfer:</p><div class="acc">KakaoBank 3333-25-8704515<small>Account holder: Ham Gye-nam (함계남)</small></div><button type="button" data-acc="en">Copy account number</button><p>International donation options will be added soon.</p></div>
   </div>
   <div class="song">
-    <h2>Listen to the full song · “Let’s Eat Together”</h2>
+    <h2>Full song · “Let’s Eat Together”</h2>
     <p>The song from the video, from start to finish.</p>
     <audio controls preload="none" src="song_en.mp3"></audio>
   </div>
   <div class="share"><button class="btn" type="button" data-copy>Copy link to share</button><code data-url></code></div>
   <div class="sns" data-sns="en"><h2>Share</h2><div class="row"></div><p>For other apps, copy the link above and paste it.</p></div>
-  <div class="kit" data-kit="en"><h2>Share kit · image and text</h2><p class="how"><b>One tap is enough.</b> Tap ‘Copy share text’ and paste it into Telegram, WhatsApp, Facebook or X — the photo below appears automatically as the link preview.<br>Instagram and TikTok don’t show link previews, so save the image and post it there.</p><div class="imgs"><img src="share_en.jpg" alt="Share image" loading="lazy"></div><pre></pre><button type="button">Copy share text (with photo preview)</button></div>
+  <div class="kit" data-kit="en"><h2>Share kit · image and text</h2><p class="how"><b>One tap is enough.</b> Tap ‘Copy share text’ and paste it into Telegram, WhatsApp, Facebook or X — the photo below appears automatically as the link preview.<br>Instagram and TikTok don’t show link previews, so save the image and post it there.</p><div class="imgs"><img src="share_en.jpg" alt="Share image" loading="lazy"></div><pre></pre><button type="button">Copy share text</button></div>
   <footer><strong>KCTU·FKTU Joint Committee Against Social Dismissal</strong>People come first.</footer>
 </div></section>
 
 <section id="s-zh" lang="zh" hidden><div class="wrap">
-  <div class="days"><span class="chip">高空静坐 第 <b data-d="sky">48</b> 天</span><span class="chip">帐篷静坐 第 <b data-d="tent">61</b> 天</span></div>
-  <p class="since"><span>高空静坐 2026年9月6日开始</span> · <span>帐篷静坐 2026年8月24日开始</span></p>
-  <p class="fast"><span>高空绝食 <b>17</b> 天</span> · <span>帐篷绝食 <b>20</b> 天后结束</span><small>在全泰壹烈士的亲弟弟全泰三先生的恳切劝说下，劳动者夫妇 양규서（Yang Gyu-seo）、함계남（Ham Gye-nam）结束了绝食。绝食结束后，高空静坐和帐篷静坐仍在继续进行。</small></p>
+  <div class="days"><span class="chip"><small>高空单绳静坐</small><span>第 <b data-d="sky">48</b> 天</span></span><span class="chip"><small>帐篷静坐</small><span>第 <b data-d="tent">61</b> 天</span></span></div>
+  <p class="since"><span>高空单绳静坐 2026年9月6日开始</span><span>帐篷静坐 2026年8月24日开始</span></p>
+  <p class="fast"><span>高空绝食 <b>17</b> 天后结束</span><span>帐篷绝食 <b>20</b> 天后结束</span><small>在全泰壹烈士的亲弟弟全泰三先生的恳切劝说下，劳动者夫妇 양규서（Yang Gyu-seo）、함계남（Ham Gye-nam）结束了绝食。绝食结束后，高空静坐和帐篷静坐仍在继续进行。</small></p>
   <p class="lead"><span>这栋大楼外墙上</span><span>有人</span></p>
   <p class="cry"><span>民主劳总，</span><span>救救劳动者！</span></p>
   <p class="first">人比什么都重要</p>
   <figure class="gm"><img src="g_seat.jpg" alt="悬在外墙上进行高空绝食"><figcaption>高空单绳绝食 · 坐姿坚持14天</figcaption></figure>
-  <div class="press"><span class="tag">PRESS</span><strong><span>你们就是</span><span>公民媒体</span></strong><span><em>请发到社交媒体，让更多人知道现在的情况！</em><br>拍下来，发出去，传开来 #公民媒体</span><span class="pl">分享链接：https://yky1234x.github.io/jeongdong/#zh</span><button class="pc" type="button" data-pc="zh">一键复制分享文字</button></div>
+  <div class="press"><span class="tag">PRESS</span><strong><span>你们就是</span><span>公民媒体</span></strong><span><em>请发到社交媒体，让更多人知道现在的情况！</em><br>拍下来，发出去，传开来 <span style="white-space:nowrap">#公民媒体</span></span><span class="pl">yky1234x.github.io/jeongdong</span><button class="pc" type="button" data-pc="zh">一键复制分享文字</button></div>
   <div class="about"><p><b>这栋楼是《京乡新闻》总部。</b>同一栋楼里还设有<b>民主劳总</b>（韩国全国民主劳动组合总联盟）总部。</p><p>民主劳总是拥有超过一百万会员的韩国两大工会联合会之一，自称代表劳动者。悬挂在<b>民主劳总总部所在大楼</b>（京乡新闻总部）外墙上的，是<b>被解雇劳动者（Ham Gye-nam）的丈夫 Yang Gyu-seo（양규서）</b>。他本人是民主劳总公共运输工会的现任组织局长。（连续受处分三次：4个月、6个月、6个月，合计16个月无薪）</p><p>这栋楼里还有<b>音乐剧《PAINTERS》的剧场</b>（京乡艺术山庄 Kyunghyang Art Hill）。来看演出的游客朋友们，这就是那栋楼的外墙。</p><div class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Kyunghyang+Shinmun+Jeongdong-gil+3+Seoul" target="_blank" rel="noopener">Google 地图</a><a href="https://map.naver.com/p/search/%EA%B2%BD%ED%96%A5%EC%8B%A0%EB%AC%B8%EC%82%AC" target="_blank" rel="noopener">Naver 地图</a></div><p class="note">本说明与该演出及制作方无关。</p></div>
   <div class="hope"><h2>大人们的希望</h2><p class="to">给小朋友们</p><p>将来你们工作的地方，应该是人与人互相尊重的地方。</p><p>Ham Gye-nam（함계남）说，她在工作的地方遭受了职场欺凌，最后被不当解雇。为了纠正这件事，夫妇俩在帐篷里和大楼外墙上日夜坚持。</p><p>这场抗争，是为了创造一个没有人在职场上被欺负的世界，让你们长大后可以安心工作。</p><p class="end">所以，这场抗争叫做“大人们的希望”。</p></div>
   <div class="log" data-log="zh"><h2>抗争日志</h2><p class="sub">每天在这里记录抗争实况，最新消息在最上方。</p><ol></ol></div>
@@ -361,13 +364,13 @@ footer strong{color:var(--fg);display:block;font-size:15px}
     });
   });
   var G=[
-    ["g_stand.jpg","",{ko:"천 한 장 위에 서서 버티는 모습",en:"Standing on a single sheet of fabric",zh:"站在一块布上坚持"}],
-    ["g_paint1.jpg","",{ko:"농성 중인데도 같은 외벽에서 도색 작업이 진행됩니다",en:"Wall painting goes on next to the sit-in",zh:"静坐期间，同一面外墙上仍在施工刷漆"}],
-    ["g_paint2.jpg","",{ko:"농성자 바로 아래를 오가는 도색 작업자",en:"A painter on ropes right below the protester",zh:"刷漆工人就在静坐者正下方上下"}],
-    ["g_fire.jpg","",{ko:"9월 6일 고공 외줄 밧줄농성 첫날, 소방 고가사다리차 출동",en:"Sept 6, day one on the wall: a fire ladder truck is sent",zh:"9月6日高空静坐第一天，消防云梯车出动"}],
+    ["g_stand.jpg","",{ko:"천 한 장 위에 서서 버팁니다",en:"Standing on one sheet of fabric",zh:"站在一块布上坚持"}],
+    ["g_paint1.jpg","",{ko:"농성 중에도 같은 벽 도색 작업",en:"Wall painting goes on beside him",zh:"静坐期间同一面墙仍在刷漆"}],
+    ["g_paint2.jpg","",{ko:"바로 아래를 오가는 도색 작업자",en:"A painter right below him",zh:"正下方上下的刷漆工人"}],
+    ["g_fire.jpg","",{ko:"9월 6일 첫날, 소방차 출동",en:"Sept 6, day one: fire truck sent",zh:"9月6日第一天，消防车出动"}],
     ["g_tarp.jpg","",{ko:"비바람에 날리는 방수포",en:"A tarp thrashed by wind and rain",zh:"风雨中翻飞的防水布"}],
-    ["g_blown.jpg","",{ko:"바람에 들린 이불과 기운 플랫폼",en:"Bedding lifted by the wind, the platform tilting",zh:"被风掀起的被子，倾斜的平台"}],
-    ["g_picket.jpg","wide",{ko:"땅 위에서는 의자에 앉아 피켓 농성을 이어갑니다",en:"On the ground, a seated picket goes on",zh:"地面上，有人坐在椅子上继续举牌静坐"}]
+    ["g_blown.jpg","",{ko:"바람에 기운 플랫폼",en:"The platform tilting in the wind",zh:"被风吹斜的平台"}],
+    ["g_picket.jpg","wide",{ko:"땅 위에서는 의자에 앉아 피켓 농성",en:"On the ground, a seated picket goes on",zh:"地面上，坐着继续举牌静坐"}]
   ];
   document.querySelectorAll("[data-gal]").forEach(function(box){
     var l=box.dataset.gal;
