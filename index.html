@@ -282,9 +282,9 @@ footer strong{color:var(--fg);display:block;font-size:15px}
     function dn(s,y,m,d){var a=s.split("-");return Math.floor((Date.UTC(+a[0],a[1]-1,+a[2])-Date.UTC(y,m-1,d))/864e5)+1;}
     function fmt(s,l){var a=s.split("-"),y=+a[0],m=+a[1],d=+a[2];if(l==="ko")return y+". "+m+". "+d+".";if(l==="zh")return y+"年"+m+"月"+d+"日";return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m-1]+" "+d+", "+y;}
     function dc(s,l){var t=dn(s,2026,8,24),k=dn(s,2026,9,6),o=[];
-      if(l==="ko"){if(t>0)o.push("천막 "+t+"일차");if(k>0)o.push("고공 외줄 밧줄 "+k+"일차");}
-      else if(l==="zh"){if(t>0)o.push("帐篷第"+t+"天");if(k>0)o.push("高空第"+k+"天");}
-      else{if(t>0)o.push("Tent day "+t);if(k>0)o.push("Wall day "+k);}
+      if(l==="ko"){if(k>0)o.push("고공 외줄 밧줄농성 "+k+"일차");if(t>0)o.push("천막농성 "+t+"일차");}
+      else if(l==="zh"){if(k>0)o.push("高空单绳静坐第"+k+"天");if(t>0)o.push("帐篷静坐第"+t+"天");}
+      else{if(k>0)o.push("Wall day "+k);if(t>0)o.push("Tent day "+t);}
       return o.join(" · ");}
     var rows=LOG.slice().sort(function(a,b){return a.d<b.d?1:-1});
     document.querySelectorAll("[data-log]").forEach(function(box){
