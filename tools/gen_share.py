@@ -26,15 +26,15 @@ M, D = today.month, today.day
 T = {
  'ko': dict(i=1, days=f'고공 외줄 밧줄농성 {sky}일째 · 천막농성 {tent}일째', asof=f'({M}월 {D}일 기준)',
             h=['이 건물 외벽에', '사람이 있습니다'], sub=['서울 정동 · 경향신문사 본사', '민주노총 본부 건물'],
-            cry=['민주노총은', '노동자를 살려라!'], first='사람이 먼저입니다', press='여러분이 시민 언론사입니다',
+            cry=['민주노총은', '노동자를 살려라!'], first='사람이 먼저입니다', press='여러분이 글로벌 시민 언론사입니다',
             go='영상 · 사진 · 일지 · 후원 ▶ 링크', zoom='확대'),
  'en': dict(i=1, days=f'Wall: day {sky} · Tent: day {tent}', asof=f'(as of {today.strftime("%b")} {D})',
             h=['A person is living', 'on this wall'], sub=['Kyunghyang Shinmun HQ, Seoul', 'also home to KCTU headquarters'],
-            cry=['KCTU,', 'save the workers!'], first='People come first', press='You are the citizen press',
+            cry=['KCTU,', 'save the workers!'], first='People come first', press='You are the global citizen press',
             go='Video · Photos · Log ▶ Link', zoom='ZOOM'),
  'zh': dict(i=2, days=f'高空单绳静坐第{sky}天 · 帐篷静坐第{tent}天', asof=f'（截至{M}月{D}日）',
             h=['这栋大楼外墙上', '有人'], sub=['首尔贞洞 · 京乡新闻总部', '民主劳总总部所在大楼'],
-            cry=['民主劳总，', '救救劳动者！'], first='人比什么都重要', press='你们就是公民媒体',
+            cry=['民主劳总，', '救救劳动者！'], first='人比什么都重要', press='你们就是全球公民媒体',
             go='视频 · 照片 · 日志 ▶ 链接', zoom='放大'),
 }
 
@@ -92,7 +92,7 @@ def square(t):
     s = '이 건물 외벽에 사람이 있습니다'; d.text((S // 2, y + 40), s, font=fit(s, 70, S - 80), fill='white', anchor='mm')
     s = '민주노총은 노동자를 살려라! · 사람이 먼저입니다'; d.text((S // 2, y + 130), s, font=fit(s, 44, S - 80), fill=YEL, anchor='mm')
     d.rounded_rectangle((60, y + 190, S - 60, y + 400), radius=20, fill=YEL)
-    s = '여러분이 시민 언론사입니다'; d.text((S // 2, y + 255), s, font=fit(s, 62, S - 200), fill='black', anchor='mm')
+    s = '여러분이 글로벌 시민 언론사입니다'; d.text((S // 2, y + 255), s, font=fit(s, 62, S - 200), fill='black', anchor='mm')
     s = '링크에서 영상 · 사진 · 투쟁 일지 · 후원 안내'; d.text((S // 2, y + 340), s, font=fit(s, 36, S - 200, True), fill=RED, anchor='mm')
     return sq
 
