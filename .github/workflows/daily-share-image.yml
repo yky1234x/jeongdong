@@ -21,9 +21,7 @@ jobs:
       - name: Generate images with today's day counts
         run: python tools/gen_share.py
       - name: Bump preview image address so KakaoTalk/Telegram fetch today's image
-        run: |
-          V=$(TZ=Asia/Seoul date +%Y%m%d)
-          sed -i -E "s#(jeongdong/share\.jpg)(\?v=[0-9]+)?\"#\1?v=${V}\"#g" index.html
+        run: python tools/bump_preview.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
