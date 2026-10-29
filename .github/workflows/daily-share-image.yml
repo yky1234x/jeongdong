@@ -20,9 +20,13 @@ jobs:
           pip install --quiet pillow
       - name: Generate images with today's day counts
         run: python tools/gen_share.py
+      - name: Bump preview image address so KakaoTalk/Telegram fetch today's image
+        run: |
+          V=$(TZ=Asia/Seoul date +%Y%m%d)
+          sed -i -E "s#(jeongdong/share\.jpg)(\?v=[0-9]+)?\"#\1?v=${V}\"#g" index.html
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add share.jpg share_ko.jpg share_en.jpg share_zh.jpg share_sq.jpg
+          git add share.jpg share_ko.jpg share_en.jpg share_zh.jpg share_sq.jpg index.html
           git diff --cached --quiet || (git commit -m "Daily share image $(TZ=Asia/Seoul date +%F)" && git push)
