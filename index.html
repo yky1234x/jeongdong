@@ -125,6 +125,7 @@ p{margin:0}
 .log time{display:block;font-weight:900;font-size:15px;font-variant-numeric:tabular-nums}
 .log .dc{font-size:12px;color:var(--red);font-weight:700}
 .log p{font-size:15px;margin-top:2px}
+.log .logmore{font:inherit;font-size:14px;font-weight:700;background:transparent;color:var(--red);border:1.5px solid var(--red);border-radius:999px;padding:8px 16px;cursor:pointer;align-self:flex-start;min-height:40px}
 .log .logimgs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;max-width:520px}
 .log .logimgs figure{margin:0;display:flex;flex-direction:column;gap:4px;min-width:0}
 .log .logimgs img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line);border-radius:10px;display:block}
@@ -173,7 +174,7 @@ footer strong{color:var(--fg);display:block;font-size:15px}
 <header class="band">
   <div class="wrap">
     <div class="loc" id="loc">서울 정동 경향신문사 외벽 고공 외줄 밧줄농성</div>
-    <div class="upd" data-upd>최종 업데이트 2026. 11. 12. 12:20</div>
+    <div class="upd" data-upd>최종 업데이트 2026. 11. 12. 12:25</div>
     <div class="langs" role="group" aria-label="Language">
       <button type="button" id="b-ko" data-l="ko" aria-pressed="true">한국어</button>
       <button type="button" id="b-en" data-l="en" aria-pressed="false">English</button>
@@ -337,7 +338,8 @@ footer strong{color:var(--fg);display:block;font-size:15px}
     var rows=LOG.slice().sort(function(a,b){return a.d<b.d?1:-1});
     document.querySelectorAll("[data-log]").forEach(function(box){
       var l=box.dataset.log, ol=box.querySelector("ol");
-      rows.forEach(function(r){var li=document.createElement("li");var t=document.createElement("time");t.dateTime=r.d;t.textContent=fmt(r.d,l);var c=document.createElement("span");c.className="dc";c.textContent=dc(r.d,l);var p=document.createElement("p");p.textContent=r[l];li.appendChild(t);li.appendChild(c);li.appendChild(p);if(r.u){var a=document.createElement("a");a.href=r.u;a.target="_blank";a.rel="noopener";a.className="src";a.textContent=r.ut[l];li.appendChild(a);}if(r.img){var im=document.createElement("img");im.src=r.img;im.alt=r.ia[l];im.loading="lazy";im.className="logimg";li.appendChild(im);}if(r.imgs){var gw=document.createElement("div");gw.className="logimgs";r.imgs.forEach(function(g){var fg=document.createElement("figure");var gi=document.createElement("img");gi.src=g[0];gi.alt=g[1][l];gi.loading="lazy";var gc=document.createElement("figcaption");gc.textContent=g[1][l];fg.appendChild(gi);fg.appendChild(gc);gw.appendChild(fg);});li.appendChild(gw);}ol.appendChild(li)});
+      var pick=rows.length>3?[rows[0],rows[Math.floor((rows.length-1)/2)],rows[rows.length-1]]:rows;rows.forEach(function(r){var li=document.createElement("li");if(pick.indexOf(r)<0){li.hidden=true;li.className="more";}var t=document.createElement("time");t.dateTime=r.d;t.textContent=fmt(r.d,l);var c=document.createElement("span");c.className="dc";c.textContent=dc(r.d,l);var p=document.createElement("p");p.textContent=r[l];li.appendChild(t);li.appendChild(c);li.appendChild(p);if(r.u){var a=document.createElement("a");a.href=r.u;a.target="_blank";a.rel="noopener";a.className="src";a.textContent=r.ut[l];li.appendChild(a);}if(r.img){var im=document.createElement("img");im.src=r.img;im.alt=r.ia[l];im.loading="lazy";im.className="logimg";li.appendChild(im);}if(r.imgs){var gw=document.createElement("div");gw.className="logimgs";r.imgs.forEach(function(g){var fg=document.createElement("figure");var gi=document.createElement("img");gi.src=g[0];gi.alt=g[1][l];gi.loading="lazy";var gc=document.createElement("figcaption");gc.textContent=g[1][l];fg.appendChild(gi);fg.appendChild(gc);gw.appendChild(fg);});li.appendChild(gw);}ol.appendChild(li)});
+      if(rows.length>3){var mb=document.createElement("button");mb.type="button";mb.className="logmore";var LB={ko:["전체 일지 보기 ("+rows.length+"건)","3건만 보기"],en:["Show full log ("+rows.length+")","Show 3 only"],zh:["查看全部日志（"+rows.length+"条）","只看3条"]}[l];mb.textContent=LB[0];var open=false;mb.addEventListener("click",function(){open=!open;ol.querySelectorAll("li.more").forEach(function(x){x.hidden=!open});mb.textContent=LB[open?1:0];});box.appendChild(mb);}
     });
   })();
   // iPhone fallback: load the media file whole and play it from memory
