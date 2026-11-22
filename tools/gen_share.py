@@ -75,6 +75,70 @@ def landscape(L, t):
     d.text((x + mw // 2, mid + 26), t['go'], font=fit(t['go'], 24, mw - 24, True), fill=RED, anchor='mm')
     return im
 
+
+import json
+HL = json.load(open(os.path.join(ROOT, 'tools', 'headline.json'), encoding='utf-8'))
+HL_DATES = sorted(k for k in HL if k[:1].isdigit() and k <= today.isoformat())
+DEFAULT = {
+ 'ko': {"kicker": "오늘의 외벽", "head": ["{sky}일째,", "그는 아직 외벽 위에 있습니다"], "quote": "“민주노총은 노동자를 살려라!”", "sub": ["30m 넘는 외벽, 구조물 없이 밧줄 하나", "▶ 영상 · 사진 · 투쟁 일지 보기"]},
+ 'en': {"kicker": "Today on the wall", "head": ["Day {sky}:", "he is still on the wall"], "quote": "“KCTU, save the workers!”", "sub": ["Over 30 m up, hanging from a single rope", "▶ Video · photos · daily log"]},
+ 'zh': {"kicker": "今日外墙", "head": ["第{sky}天，", "他仍在外墙上"], "quote": "“民主劳总，救救劳动者！”", "sub": ["30多米高的外墙，只靠一根绳子", "▶ 视频 · 照片 · 抗争日志"]},
+}
+MAST = {'ko': ('정동 농성 일보', '{y}년 {m}월 {d}일 · 제{sky}호 · 고공 외줄 밧줄농성 {sky}일째 · 천막농성 {tent}일째', '이 건물 외벽에 사람이 있습니다', '여러분이 글로벌 시민 언론사입니다', '눌러서 보기 ▶', '서울 정동 경향신문사(민주노총 본부 건물) 외벽 · 지금 이 순간에도'),
+        'en': ('Jeongdong Sit-in Daily', '{mon} {d}, {y} · No. {sky} · Wall: day {sky} · Tent: day {tent}', 'A person is living on this wall', 'You are the global citizen press', 'Tap to see ▶', 'Kyunghyang Shinmun / KCTU HQ, Seoul · right now'),
+        'zh': ('贞洞静坐日报', '{y}年{m}月{d}日 · 第{sky}期 · 高空单绳静坐第{sky}天 · 帐篷第{tent}天', '这栋大楼外墙上有人', '你们就是全球公民媒体', '点击查看 ▶', '首尔贞洞京乡新闻（民主劳总总部大楼）外墙 · 此时此刻')}
+
+def daily(L, t):
+    def f(sz, b=False, serif=False):
+        if serif:
+            g = glob.glob('/usr/share/fonts/**/NotoSerifCJK-Bold.ttc', recursive=True)
+            if g: return ImageFont.truetype(g[0], sz, index=t['i'])
+        return ImageFont.truetype(FBo if b else FB, sz, index=t['i'])
+    def fit(lines, size, maxw, **k):
+        if isinstance(lines, str): lines = [lines]
+        while any(f(size, **k).getlength(x) > maxw for x in lines): size -= 2
+        return f(size, **k)
+    c = dict((HL[HL_DATES[-1]] if HL_DATES else {}).get(L) or DEFAULT[L])
+    fm = lambda x: x.format(sky=sky, tent=tent)
+    W, H = 1280, 720; PAPER = (244, 238, 226); INK = (20, 16, 17)
+    im = Image.new('RGB', (W, H), PAPER); d = ImageDraw.Draw(im)
+    mt, mline, tag, press, cta, cap = MAST[L]
+    d.text((44, 18), mt, font=fit(mt, 56, 400, serif=True), fill=INK)
+    ml = mline.format(y=today.year, m=M, d=D, mon=today.strftime('%b'), sky=sky, tent=tent)
+    d.text((W - 44, 50), ml, font=fit(ml, 24, W - 44 - 470), fill=(90, 70, 70), anchor='rm')
+    d.line([(44, 100), (W - 44, 100)], fill=INK, width=5); d.line([(44, 108), (W - 44, 108)], fill=INK, width=1)
+    # 오른쪽: 고정 사진 (외벽 고공농성)
+    PW, PY, PH = 440, 128, 572; px = W - 44 - PW
+    z = zoomimg.crop((280, 90, 800, 850)); r = max(PW / z.width, PH / z.height)
+    z = z.resize((int(z.width * r) + 1, int(z.height * r) + 1)); ox = (z.width - PW) // 2
+    im.paste(z.crop((ox, 0, ox + PW, PH)), (px, PY))
+    d.rectangle([px, PY, px + PW - 1, PY + PH - 1], outline=INK, width=3)
+    d.rounded_rectangle((px + 14, PY + 14, px + 14 + 200, PY + 58), radius=8, fill=RED)
+    d.text((px + 114, PY + 36), {'ko':'외벽 위 양규서','en':'ON THE WALL','zh':'外墙上'}[L], font=f(26, True), fill='white', anchor='mm')
+    d.rectangle([px, PY + PH - 46, px + PW, PY + PH], fill=(20, 16, 17))
+    d.text((px + PW // 2, PY + PH - 23), cap, font=fit(cap, 20, PW - 20, b=True), fill='white', anchor='mm')
+    # 왼쪽: 날짜별 1면
+    LW = px - 44 - 34; x = 44; y = 128
+    kf = f(28, True); kw = int(kf.getlength(c['kicker'])) + 28
+    d.rectangle([x, y, x + kw, y + 44], fill=RED); d.text((x + 14, y + 22), c['kicker'], font=kf, fill='white', anchor='lm')
+    y += 62
+    head = [fm(h) for h in c['head']]; hf = fit(head, 60, LW, serif=True)
+    for h in head: d.text((x, y), h, font=hf, fill=INK); y += int(hf.size * 1.28)
+    y += 6; qf = fit(c['quote'], 30, LW, b=True)
+    d.rectangle([x, y, x + 6, y + int(qf.size * 1.5)], fill=RED)
+    d.text((x + 18, y + int(qf.size * .75)), c['quote'], font=qf, fill=RED, anchor='lm'); y += int(qf.size * 1.5) + 20
+    sf = fit(c['sub'], 25, LW)
+    for s_ in c['sub']: d.text((x, y), s_, font=sf, fill=(60, 50, 50)); y += int(sf.size * 1.5)
+    # 아래: 고정 문구 + 누르기 버튼
+    by = H - 132
+    d.line([(x, by - 14), (x + LW, by - 14)], fill=INK, width=2)
+    tf = fit(tag, 36, LW, b=True); d.text((x, by), tag, font=tf, fill=INK)
+    bf = f(24, True); bw = int(bf.getlength(cta)) + 36
+    d.text((x, H - 54), press, font=fit(press, 24, LW - bw - 20, b=True), fill=RED, anchor='lm')
+    d.rounded_rectangle((x + LW - bw, H - 76, x + LW, H - 32), radius=22, fill=RED)
+    d.text((x + LW - bw // 2, H - 54), cta, font=bf, fill='white', anchor='mm')
+    return im
+
 def square(t):
     def f(s, b=False): return ImageFont.truetype(FBo if b else FB, s, index=1)
     def fit(s, size, maxw, b=False):
@@ -97,7 +161,7 @@ def square(t):
     return sq
 
 for L, t in T.items():
-    im = landscape(L, t)
+    im = daily(L, t)
     im.save(os.path.join(ROOT, f'share_{L}.jpg'), quality=88)
     if L == 'ko': im.save(os.path.join(ROOT, 'share.jpg'), quality=88)
 square(T['ko']).save(os.path.join(ROOT, 'share_sq.jpg'), quality=85)

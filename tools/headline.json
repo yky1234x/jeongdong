@@ -1,0 +1,8 @@
+{
+  "_설명": "썸네일 왼쪽 '오늘의 1면' 문구. 날짜(일지 날짜)별로 추가. 가장 최근 날짜가 쓰임. 없으면 기본 문구.",
+  "2026-11-21": {
+    "ko": {"kicker": "11월 21일 소식", "head": ["{sky}일째 외벽 위,", "그가 내건 단 하나의 조건"], "quote": "“5인 미만 해고 없다는 합의 전엔 못 내려간다”", "sub": ["8부 능선 넘은 농성 · 장수회관 할머니의 파티 약속", "▶ 23일(월) 오후 2시 서울대병원 기자회견"]},
+    "en": {"kicker": "News · Nov 21", "head": ["Day {sky} on the wall:", "his one condition"], "quote": "“I won’t come down until no one at small workplaces is fired.”", "sub": ["Past the last ridge — a party promised on the day of victory", "▶ Mon Nov 23, 2 p.m. press conference, SNU Hospital"]},
+    "zh": {"kicker": "11月21日消息", "head": ["外墙上第{sky}天，", "他提出的唯一条件"], "quote": "“不承诺5人以下单位不解雇，我就不下来”", "sub": ["斗争已越过最后一道山脊", "▶ 23日（周一）下午2点 首尔大学医院记者会"]}
+  }
+}
