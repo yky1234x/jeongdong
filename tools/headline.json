@@ -37,5 +37,43 @@
         "▶ 23日（周一）下午2点 首尔大学医院记者会"
       ]
     }
+  },
+  "2026-11-23": {
+    "ko": {
+      "kicker": "11월 23일 소식",
+      "head": [
+        "노동조합이 해고를?",
+        "그곳엔 ‘경영상 이유’가 없습니다"
+      ],
+      "quote": "“비영리 5인 미만에도 근로기준법을 당장 적용하라”",
+      "sub": [
+        "서울대병원 긴급 기자회견 · 서울지부 항의 방문",
+        "정리해고 = 정당한 해고? 잘못된 등식입니다"
+      ]
+    },
+    "en": {
+      "kicker": "News · Nov 23",
+      "head": [
+        "A union firing workers?",
+        "There is no ‘business reason’"
+      ],
+      "quote": "“Apply the Labor Standards Act to small nonprofits now.”",
+      "sub": [
+        "Emergency press conference & protest visit, SNU Hospital",
+        "Layoff = lawful dismissal? A false equation"
+      ]
+    },
+    "zh": {
+      "kicker": "11月23日消息",
+      "head": [
+        "工会也搞解雇？",
+        "这里没有“经营上的理由”"
+      ],
+      "quote": "“立即对非营利5人以下单位适用劳动基准法”",
+      "sub": [
+        "首尔大学医院紧急记者会 · 抗议走访首尔支部",
+        "整理解雇=正当解雇？错误的等式"
+      ]
+    }
   }
 }
