@@ -75,5 +75,43 @@
         "“工会专职人员也是劳动者，适用劳动基准法！”"
       ]
     }
+  },
+  "2026-11-24": {
+    "ko": {
+      "kicker": "11월 24일 소식",
+      "head": [
+        "“제가 무엇을",
+        "잘못했을까요?”"
+      ],
+      "quote": "“민주노총에서 일하다 해고당하는 일은 되돌려 놓겠습니다”",
+      "sub": [
+        "민주노총 산하 노조에서 4년 일하고 해고된 함계남",
+        "칼바람 속 서울대병원 시계탑 앞 선전전"
+      ]
+    },
+    "en": {
+      "kicker": "News · Nov 24",
+      "head": [
+        "“What did I",
+        "do wrong?”"
+      ],
+      "quote": "“I will undo dismissals of people who work for the KCTU.”",
+      "sub": [
+        "Ham Gye-nam, fired after 4 years at a KCTU union",
+        "Picket in a biting wind at the SNU Hospital clock tower"
+      ]
+    },
+    "zh": {
+      "kicker": "11月24日消息",
+      "head": [
+        "“我做错了",
+        "什么？”"
+      ],
+      "quote": "“至少要纠正在民主劳总工作却被解雇的事”",
+      "sub": [
+        "在民主劳总下属工会工作4年后被解雇的Ham Gye-nam",
+        "寒风中首尔大学医院钟楼前宣传"
+      ]
+    }
   }
 }
