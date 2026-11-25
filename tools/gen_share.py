@@ -1,6 +1,8 @@
 # 공유 이미지 자동 생성: 오늘(한국 시간) 날짜로 농성 일수를 계산해 미리보기·공유 이미지를 다시 만듭니다.
 # GitHub Actions가 매일 0시(KST)에 실행합니다. 직접 실행: python tools/gen_share.py
-import datetime, glob, os
+import datetime, glob, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import hook
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,7 +20,8 @@ def find_font(bold):
     raise SystemExit('Noto CJK font not found (apt install fonts-noto-cjk)')
 FB, FBo = find_font(False), find_font(True)
 
-today = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9)).date()
+today = hook.today()
+if os.environ.get('SHARE_DATE'): today = datetime.date.fromisoformat(os.environ['SHARE_DATE'])  # 미리보기 시험용
 sky = (today - SKY_START).days + 1
 tent = (today - TENT_START).days + 1
 M, D = today.month, today.day
@@ -98,45 +101,45 @@ def daily(L, t):
         if isinstance(lines, str): lines = [lines]
         while any(f(size, **k).getlength(x) > maxw for x in lines): size -= 2
         return f(size, **k)
-    c = dict((HL[HL_DATES[-1]] if HL_DATES else {}).get(L) or DEFAULT[L])
-    fm = lambda x: x.format(sky=sky, tent=tent)
-    W, H = 1280, 720; PAPER = (244, 238, 226); INK = (20, 16, 17)
+    c = hook.headline(L, today); TH = hook.theme(today)
+    fm = lambda x: x
+    W, H = 1280, 720; PAPER = TH['bg']; INK = TH['ink']; ACC = TH['acc']; ON = TH['on']; MUT = TH['muted']
     im = Image.new('RGB', (W, H), PAPER); d = ImageDraw.Draw(im)
     mt, mline, tag, press, cta, cap = MAST[L]
     d.text((44, 18), mt, font=fit(mt, 56, 400, serif=True), fill=INK)
     ml = mline.format(y=today.year, m=M, d=D, mon=today.strftime('%b'), sky=sky, tent=tent)
-    d.text((W - 44, 50), ml, font=fit(ml, 24, W - 44 - 470), fill=(90, 70, 70), anchor='rm')
+    d.text((W - 44, 50), ml, font=fit(ml, 24, W - 44 - 470), fill=MUT, anchor='rm')
     d.line([(44, 100), (W - 44, 100)], fill=INK, width=5); d.line([(44, 108), (W - 44, 108)], fill=INK, width=1)
     # 오른쪽: 고정 사진 (외벽 고공농성)
     PW, PY, PH = 440, 128, 572; px = W - 44 - PW
     z = zoomimg.crop((280, 90, 800, 850)); r = max(PW / z.width, PH / z.height)
     z = z.resize((int(z.width * r) + 1, int(z.height * r) + 1)); ox = (z.width - PW) // 2
     im.paste(z.crop((ox, 0, ox + PW, PH)), (px, PY))
-    d.rectangle([px, PY, px + PW - 1, PY + PH - 1], outline=INK, width=3)
-    d.rounded_rectangle((px + 14, PY + 14, px + 14 + 200, PY + 58), radius=8, fill=RED)
-    d.text((px + 114, PY + 36), {'ko':'외벽 위 양규서','en':'ON THE WALL','zh':'外墙上'}[L], font=f(26, True), fill='white', anchor='mm')
+    d.rectangle([px, PY, px + PW - 1, PY + PH - 1], outline=ACC, width=5)
+    d.rounded_rectangle((px + 14, PY + 14, px + 14 + 200, PY + 58), radius=8, fill=ACC)
+    d.text((px + 114, PY + 36), {'ko':'외벽 위 양규서','en':'ON THE WALL','zh':'外墙上'}[L], font=f(26, True), fill=ON, anchor='mm')
     d.rectangle([px, PY + PH - 46, px + PW, PY + PH], fill=(20, 16, 17))
     d.text((px + PW // 2, PY + PH - 23), cap, font=fit(cap, 20, PW - 20, b=True), fill='white', anchor='mm')
     # 왼쪽: 날짜별 1면
     LW = px - 44 - 34; x = 44; y = 128
     kf = f(28, True); kw = int(kf.getlength(c['kicker'])) + 28
-    d.rectangle([x, y, x + kw, y + 44], fill=RED); d.text((x + 14, y + 22), c['kicker'], font=kf, fill='white', anchor='lm')
+    d.rectangle([x, y, x + kw, y + 44], fill=ACC); d.text((x + 14, y + 22), c['kicker'], font=kf, fill=ON, anchor='lm')
     y += 62
-    head = [fm(h) for h in c['head']]; hf = fit(head, 60, LW, serif=True)
+    head = c['head']; hf = fit(head, 66, LW, serif=True)
     for h in head: d.text((x, y), h, font=hf, fill=INK); y += int(hf.size * 1.28)
     y += 6; qf = fit(c['quote'], 30, LW, b=True)
-    d.rectangle([x, y, x + 6, y + int(qf.size * 1.5)], fill=RED)
-    d.text((x + 18, y + int(qf.size * .75)), c['quote'], font=qf, fill=RED, anchor='lm'); y += int(qf.size * 1.5) + 20
+    d.rectangle([x, y, x + 6, y + int(qf.size * 1.5)], fill=ACC)
+    d.text((x + 18, y + int(qf.size * .75)), c['quote'], font=qf, fill=ACC, anchor='lm'); y += int(qf.size * 1.5) + 20
     sf = fit(c['sub'], 25, LW)
-    for s_ in c['sub']: d.text((x, y), s_, font=sf, fill=(60, 50, 50)); y += int(sf.size * 1.5)
+    for s_ in c['sub']: d.text((x, y), s_, font=sf, fill=MUT); y += int(sf.size * 1.5)
     # 아래: 고정 문구 + 누르기 버튼
     by = H - 132
     d.line([(x, by - 14), (x + LW, by - 14)], fill=INK, width=2)
     tf = fit(tag, 36, LW, b=True); d.text((x, by), tag, font=tf, fill=INK)
     bf = f(24, True); bw = int(bf.getlength(cta)) + 36
-    d.text((x, H - 54), press, font=fit(press, 24, LW - bw - 20, b=True), fill=RED, anchor='lm')
-    d.rounded_rectangle((x + LW - bw, H - 76, x + LW, H - 32), radius=22, fill=RED)
-    d.text((x + LW - bw // 2, H - 54), cta, font=bf, fill='white', anchor='mm')
+    d.text((x, H - 54), press, font=fit(press, 24, LW - bw - 20, b=True), fill=ACC, anchor='lm')
+    d.rounded_rectangle((x + LW - bw, H - 76, x + LW, H - 32), radius=22, fill=ACC)
+    d.text((x + LW - bw // 2, H - 54), cta, font=bf, fill=ON, anchor='mm')
     return im
 
 def square(t):
@@ -144,20 +147,23 @@ def square(t):
     def fit(s, size, maxw, b=False):
         while f(size, b).getlength(s) > maxw: size -= 2
         return f(size, b)
-    S = 1080; sq = Image.new('RGB', (S, S), DARK); d = ImageDraw.Draw(sq)
+    TH = hook.theme(today); ACC, ON = TH['acc'], TH['on']
+    BG = TH['bg'] if sum(TH['bg']) < 300 else DARK
+    S = 1080; sq = Image.new('RGB', (S, S), BG); d = ImageDraw.Draw(sq)
     ph = zoomimg.crop((250, 60, 830, 900))
     p2 = ph.resize((S, int(S * ph.height / ph.width))).crop((0, 80, S, 700)); sq.paste(p2, (0, 0))
-    d.rectangle((0, 0, S, 90), fill=RED)
-    s = '서울 정동 경향신문사 외벽 고공 외줄 밧줄농성'; d.text((S // 2, 45), s, font=fit(s, 40, S - 60), fill='white', anchor='mm')
-    d.rounded_rectangle((S // 2 - 400, 110, S // 2 + 400, 190), radius=40, fill=DARK)
-    d.text((S // 2, 140), t['days'], font=fit(t['days'], 38, 760), fill=YEL, anchor='mm')
+    d.rectangle((0, 0, S, 90), fill=ACC)
+    s = '서울 정동 경향신문사 외벽 고공 외줄 밧줄농성'; d.text((S // 2, 45), s, font=fit(s, 40, S - 60), fill=ON, anchor='mm')
+    d.rounded_rectangle((S // 2 - 400, 110, S // 2 + 400, 190), radius=40, fill=BG)
+    d.text((S // 2, 140), t['days'], font=fit(t['days'], 38, 760), fill=ACC, anchor='mm')
     d.text((S // 2, 176), t['asof'], font=f(22, True), fill=(230, 230, 230), anchor='mm')
     y = 640
-    s = '이 건물 외벽에 사람이 있습니다'; d.text((S // 2, y + 40), s, font=fit(s, 70, S - 80), fill='white', anchor='mm')
-    s = '민주노총은 노동자를 살려라! · 사람이 먼저입니다'; d.text((S // 2, y + 130), s, font=fit(s, 44, S - 80), fill=YEL, anchor='mm')
-    d.rounded_rectangle((60, y + 190, S - 60, y + 400), radius=20, fill=YEL)
-    s = '여러분이 글로벌 시민 언론사입니다'; d.text((S // 2, y + 255), s, font=fit(s, 62, S - 200), fill='black', anchor='mm')
-    s = '링크에서 영상 · 사진 · 투쟁 일지 · 후원 안내'; d.text((S // 2, y + 340), s, font=fit(s, 36, S - 200, True), fill=RED, anchor='mm')
+    hk = hook.headline('ko', today)
+    s = ' '.join(hk['head']); d.text((S // 2, y + 40), s, font=fit(s, 70, S - 80), fill='white', anchor='mm')
+    s = hk['quote']; d.text((S // 2, y + 130), s, font=fit(s, 44, S - 80), fill=ACC, anchor='mm')
+    d.rounded_rectangle((60, y + 190, S - 60, y + 400), radius=20, fill=ACC)
+    s = '여러분이 글로벌 시민 언론사입니다'; d.text((S // 2, y + 255), s, font=fit(s, 62, S - 200), fill=ON, anchor='mm')
+    s = '링크에서 영상 · 사진 · 투쟁 일지 · 후원 안내'; d.text((S // 2, y + 340), s, font=fit(s, 36, S - 200, True), fill=ON, anchor='mm')
     return sq
 
 for L, t in T.items():
@@ -165,4 +171,4 @@ for L, t in T.items():
     im.save(os.path.join(ROOT, f'share_{L}.jpg'), quality=88)
     if L == 'ko': im.save(os.path.join(ROOT, 'share.jpg'), quality=88)
 square(T['ko']).save(os.path.join(ROOT, 'share_sq.jpg'), quality=85)
-print(f'{today}: 고공 {sky}일째 · 천막 {tent}일째 이미지 생성 완료')
+print(f'{today}: 고공 {sky}일째 · 천막 {tent}일째 이미지 생성 완료 (색: {hook.theme(today)["name"]} · 문구: {" ".join(hook.headline("ko", today)["head"])})')
